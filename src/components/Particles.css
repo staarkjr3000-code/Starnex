@@ -1,0 +1,99 @@
+/* CENTER RING */
+.core-ring {
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  border: 3px solid rgba(0,255,255,0.9);
+
+  box-shadow:
+    0 0 20px rgba(0,255,255,0.8),
+    0 0 60px rgba(0,255,255,0.6),
+    0 0 120px rgba(0,255,255,0.35);
+
+  animation:
+    ringPulse 2.5s ease-in-out infinite,
+    ringRotate 18s linear infinite;
+
+}
+
+
+/* glow breathing */
+@keyframes ringPulse {
+
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(0,255,255,0.8),
+      0 0 60px rgba(0,255,255,0.6),
+      0 0 120px rgba(0,255,255,0.35);
+  }
+
+  50% {
+    box-shadow:
+      0 0 35px rgba(0,255,255,1),
+      0 0 90px rgba(0,255,255,0.8),
+      0 0 180px rgba(0,255,255,0.5);
+  }
+
+}
+
+
+/* slow rotation */
+@keyframes ringRotate {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+/* PARTICLES FADE */
+
+.particles-fade {
+
+  position: fixed;
+
+  inset: 0;
+
+  opacity: 0;
+
+  animation: particlesFadeIn 2.5s ease forwards;
+
+  animation-delay: 1.2s;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+}
+
+
+/* animation */
+
+@keyframes particlesFadeIn {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+/* ensure particles fill screen */
+
+#tsparticles {
+
+  width: 100%;
+  height: 100%;
+
+}

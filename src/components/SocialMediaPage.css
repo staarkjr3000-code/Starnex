@@ -1,0 +1,198 @@
+.social-page {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #020202, #000);
+  overflow: hidden;
+  z-index: 100;
+}
+
+
+/* GRID */
+
+.social-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,255,0.08) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridMove 40s linear infinite;
+}
+
+@keyframes gridMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(80px); }
+}
+
+
+/* SCANLINES */
+
+.social-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 3px,
+    rgba(0,255,255,0.03) 4px
+  );
+}
+
+
+/* HEADING */
+
+.social-heading {
+  font-size: 42px;
+  letter-spacing: 10px;
+  color: #00ffff;
+  text-shadow: 0 0 15px #00ffff;
+  animation: flicker 3s infinite;
+}
+
+@keyframes flicker {
+  0%,100% { opacity:1 }
+  50% { opacity:0.7 }
+}
+
+
+/* PANEL */
+
+.social-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+
+.panel-header {
+  color:#00ffff;
+  font-size:14px;
+  letter-spacing:4px;
+  opacity:0.6;
+}
+
+
+/* BUTTON */
+
+.social-button {
+  width:260px;
+  padding:14px;
+  color:#00ffff;
+  border:1px solid rgba(0,255,255,0.4);
+  background:rgba(0,255,255,0.05);
+  transition:0.3s;
+}
+
+.social-button:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 25px #00ffff;
+}
+
+
+/* SIDE TEXT */
+
+.social-info-left,
+.social-info-right {
+
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.social-info-left { left:40px }
+.social-info-right { right:40px }
+
+.info-block {
+
+  color:#00ffff;
+  font-size:12px;
+  letter-spacing:3px;
+  opacity:0.5;
+}
+
+
+/* FOOTER */
+
+.social-footer {
+
+  position:absolute;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#00ffff;
+  font-size:12px;
+  letter-spacing:4px;
+  opacity:0.6;
+}
+
+
+/* HOLOGRAM CIRCLES */
+
+.holo-circle {
+
+  position:absolute;
+  border:1px solid rgba(0,255,255,0.2);
+  border-radius:50%;
+  animation: rotate 30s linear infinite;
+}
+
+.circle1 {
+  width:400px;
+  height:400px;
+  top:10%;
+  left:10%;
+}
+
+.circle2 {
+  width:200px;
+  height:200px;
+  bottom:15%;
+  right:15%;
+}
+
+.circle3 {
+  width:600px;
+  height:600px;
+  top:30%;
+  left:40%;
+}
+
+
+@keyframes rotate {
+
+  from { transform:rotate(0deg) }
+  to { transform:rotate(360deg) }
+
+}
+
+
+/* HOLOGRAM DOTS */
+
+.holo-dot {
+
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#00ffff;
+  border-radius:50%;
+  box-shadow:0 0 15px #00ffff;
+  animation: blink 2s infinite;
+}
+
+.dot1 { top:20%; left:30% }
+.dot2 { top:70%; left:60% }
+.dot3 { top:40%; left:80% }
+
+@keyframes blink {
+
+  0%,100% { opacity:0.3 }
+  50% { opacity:1 }
+
+}

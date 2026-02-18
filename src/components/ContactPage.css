@@ -1,0 +1,392 @@
+/* ========================= */
+/* PAGE BASE */
+/* ========================= */
+
+.contact-page {
+
+  position: fixed;
+  inset: 0;
+
+  overflow: hidden;
+
+  z-index: 30;
+
+}
+
+
+
+/* ========================= */
+/* HEADING */
+/* ========================= */
+
+.contact-heading {
+
+  position: fixed;
+
+  top: 32px;
+  left: 40px;
+
+  font-size: 42px;
+
+  letter-spacing: 8px;
+
+  color: #00ffff;
+
+  text-shadow:
+    0 0 12px #00ffff,
+    0 0 35px rgba(0,255,255,0.8);
+
+  z-index: 20;
+
+}
+
+
+
+/* ========================= */
+/* CENTER CONTENT */
+/* ========================= */
+
+.contact-center {
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 680px;
+
+  z-index: 20;
+
+}
+
+
+
+/* ========================= */
+/* TERMINAL */
+/* ========================= */
+
+.contact-terminal {
+
+  padding: 42px;
+
+  border: 1px solid rgba(0,255,255,0.5);
+
+  background: rgba(0,0,0,0.35);
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 0 30px rgba(0,255,255,0.25),
+    inset 0 0 20px rgba(0,255,255,0.12);
+
+  animation: terminalAppear 1.2s ease;
+
+}
+
+
+
+@keyframes terminalAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+
+/* ========================= */
+/* TEXT */
+/* ========================= */
+
+.contact-text {
+
+  font-size: 15px;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 16px;
+
+  color: rgba(255,255,255,0.85);
+
+}
+
+
+
+.contact-highlight {
+
+  color: #00ffff;
+
+  margin-top: 22px;
+  margin-bottom: 10px;
+
+  letter-spacing: 3px;
+
+}
+
+
+
+.contact-subtle {
+
+  opacity: 0.6;
+
+  margin-top: 12px;
+
+  font-size: 13px;
+
+}
+
+
+
+/* ========================= */
+/* EMAIL BOX */
+/* ========================= */
+
+.contact-email {
+
+  padding: 14px;
+
+  border: 1px solid #00ffff;
+
+  color: #00ffff;
+
+  background: rgba(0,255,255,0.06);
+
+  letter-spacing: 3px;
+
+  box-shadow:
+    0 0 14px rgba(0,255,255,0.6),
+    inset 0 0 12px rgba(0,255,255,0.4);
+
+  animation: emailPulse 3s infinite;
+
+}
+
+
+
+@keyframes emailPulse {
+
+  0%,100% {
+
+    box-shadow:
+      0 0 14px rgba(0,255,255,0.6),
+      inset 0 0 12px rgba(0,255,255,0.4);
+
+  }
+
+  50% {
+
+    box-shadow:
+      0 0 30px rgba(0,255,255,1),
+      inset 0 0 18px rgba(0,255,255,0.8);
+
+  }
+
+}
+
+.contact-footer-text {
+
+  color: rgba(255,255,255,0.75);
+
+  font-size: 15px;
+
+  letter-spacing: 2px;
+
+  margin-top: 18px;
+
+  line-height: 1.8;
+
+  text-shadow:
+    0 0 6px rgba(0,255,255,0.3);
+
+}
+
+
+
+/* ========================= */
+/* DARK BASE BACKGROUND */
+/* ========================= */
+
+.contact-page {
+
+  position: fixed;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at center,
+      #050505 0%,
+      #020202 40%,
+      #000000 100%);
+
+  overflow: hidden;
+
+  z-index: 30;
+
+}
+
+
+
+/* ========================= */
+/* ENERGY CORE (ABOVE DARK BASE) */
+/* ========================= */
+
+.contact-bg-core {
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at center,
+      rgba(0,255,255,0.12),
+      rgba(0,255,255,0.05),
+      transparent 60%);
+
+  animation: corePulse 6s infinite ease-in-out;
+
+  z-index: 1;
+
+}
+
+
+
+/* ========================= */
+/* GRID LAYER */
+/* ========================= */
+
+.contact-bg-grid {
+
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
+
+  background-size: 80px 80px;
+
+  animation: gridMove 25s linear infinite;
+
+  z-index: 2;
+
+}
+
+
+
+/* ========================= */
+/* PARTICLES LAYER */
+/* ========================= */
+
+.contact-bg-particles {
+
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    radial-gradient(circle,
+      rgba(0,255,255,0.7) 1.5px,
+      transparent 2px);
+
+  background-size: 160px 160px;
+
+  animation: particlesMove 40s linear infinite;
+
+  opacity: 0.25;
+
+  z-index: 3;
+
+}
+
+
+
+/* ========================= */
+/* SCANNING LIGHT */
+/* ========================= */
+
+.contact-bg-scanline {
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(0,255,255,0.12),
+      transparent);
+
+  animation: scanMove 7s linear infinite;
+
+  z-index: 4;
+
+}
+
+
+
+/* ========================= */
+/* VIGNETTE (FINAL DARKENING) */
+/* ========================= */
+
+.contact-bg-vignette {
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at center,
+      transparent 55%,
+      rgba(0,0,0,0.85));
+
+  z-index: 5;
+
+}
+
+
+
+/* ========================= */
+/* ANIMATIONS */
+/* ========================= */
+
+@keyframes corePulse {
+
+  0%,100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.15);
+  }
+
+}
+
+@keyframes gridMove {
+
+  from { transform: translateY(0); }
+
+  to { transform: translateY(80px); }
+
+}
+
+@keyframes particlesMove {
+
+  from { transform: translateY(0); }
+
+  to { transform: translateY(-300px); }
+
+}
+
+@keyframes scanMove {
+
+  from { transform: translateY(-100%); }
+
+  to { transform: translateY(100%); }
+
+}

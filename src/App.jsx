@@ -1,0 +1,177 @@
+import { useState, useEffect } from "react";
+import logo from "./assets/logo.png";
+
+import LoadingScene from "./components/LoadingScene";
+import VideoBackground from "./components/VideoBackground";
+import Particles from "./components/Particles";
+import TargetCursor from "./components/TargetCursor";
+import BackgroundMusic from "./components/BackgroundMusic";
+
+import ExplorePage from "./components/ExplorePage";
+import HeroPage from "./components/HeroPage";
+import SocialMediaPage from "./components/SocialMediaPage";
+import ContactPage from "./components/ContactPage";
+
+import "./index.css";
+
+export default function App() {
+
+  /* ================= STATES ================= */
+
+  const [started, setStarted] = useState(false);
+  const [mainVisible, setMainVisible] = useState(false);
+
+  const [exploreOpen, setExploreOpen] = useState(false);
+  const [heroOpen, setHeroOpen] = useState(false);
+  const [socialOpen, setSocialOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  
+  
+
+
+  /* ================= MAIN FADE IN ================= */
+
+  useEffect(() => {
+
+    if (started) {
+
+      const timer = setTimeout(() => {
+        setMainVisible(true);
+      }, 100);
+
+      return () => clearTimeout(timer);
+
+    }
+
+  }, [started]);
+
+
+  /* ================= LOADING SCREEN ================= */
+
+  if (!started) {
+
+    return (
+      <LoadingScene
+        onStart={() => {
+
+          setStarted(true);
+          document.body.classList.add("main-app");
+
+        }}
+      />
+    );
+
+  }
+
+
+  /* ================= MAIN APP ================= */
+
+  return (
+
+    <div className="app-root">
+
+
+      {/* VIDEO BACKGROUND */}
+      <VideoBackground />
+      
+      <img
+        src={logo}
+        alt="STAARK Logo"
+        className="main-logo"
+      />
+
+
+      {/* MAIN SCREEN */}
+      {!exploreOpen && !heroOpen && (
+
+        <div className={`main-container ${mainVisible ? "main-visible" : ""}`}>
+
+
+          {/* GLOW RING */}
+          <Particles />
+
+
+          {/* CREDIT */}
+          <div className="made-by">
+            MADE BY STAARK
+          </div>
+
+
+          {/* EXPLORE BUTTON */}
+          <button
+            className="explore-button"
+            onClick={() => setExploreOpen(true)}
+          >
+            EXPLORE
+          </button>
+
+        </div>
+
+      )}
+
+
+      {/* EXPLORE PAGE */}
+      {exploreOpen && !heroOpen && !socialOpen&& (
+        
+      <ExplorePage
+       onBack={() => setExploreOpen(false)}
+       onHero={() => {
+       setExploreOpen(false);
+       setHeroOpen(true);
+     }}
+     onSocial={() => {
+      setExploreOpen(false);
+      setSocialOpen(true);
+     }}
+     onContact={() => {
+      setExploreOpen(false);
+      setContactOpen(true);
+     }}
+      />)}
+
+      {/* HERO PAGE */}
+      {heroOpen && (
+
+        <HeroPage
+
+          onBack={() => {
+            setHeroOpen(false);
+            setExploreOpen(true);
+          }}
+
+        />
+
+      )}
+      {/* Social Media Page */}
+      {socialOpen && (
+        <SocialMediaPage
+          onBack={() => {
+           setSocialOpen(false);
+           setExploreOpen(true);
+        }}  
+      />
+    )}
+      {/* Contact Page */}
+      {contactOpen && (
+        <ContactPage
+          onBack={() => {
+            setContactOpen(false);
+            setExploreOpen(true);
+          }}
+        />
+      )}
+
+
+      {/* CURSOR */}
+      <TargetCursor />
+
+
+      {/* MUSIC */}
+      <BackgroundMusic play={started} />
+
+
+    </div>
+
+  );
+
+}
