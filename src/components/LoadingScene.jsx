@@ -83,6 +83,10 @@ export default function LoadingScene({ onStart }) {
               START
             </button>
           )}
+            {/* CREDIT */}
+              <div className="hero-credit">
+                MADE BY STAARK
+              </div>
 
         </div>
 

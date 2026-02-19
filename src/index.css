@@ -195,6 +195,38 @@ body.main-app * {
 
 }
 
+/* ========================= */
+/* CREDIT */
+/* ========================= */
+
+.hero-credit {
+
+  position: fixed;
+
+  bottom: 30px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  letter-spacing: 6px;
+
+  font-size: 14px;
+
+  color: rgba(255,255,255,0.6);
+
+  animation: creditFade 4s infinite;
+
+}
+
+@keyframes creditFade {
+
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+
+}
+
 
 /* ========================= */
 /* MAIN SCREEN */
