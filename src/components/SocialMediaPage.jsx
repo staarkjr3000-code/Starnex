@@ -97,6 +97,7 @@ export default function SocialMediaPage({ onBack }) {
         <MagneticButton
           className="social-button"
           onClick={() => window.open("https://www.instagram.com/mr_starborn?igsh=MTltYjdsbmN6dmdibg==")}
+          
         >
           INSTAGRAM
         </MagneticButton>

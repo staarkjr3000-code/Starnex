@@ -78,6 +78,7 @@ export default function LoadingScene({ onStart }) {
             <button
               className="start-button"
               onClick={onStart}
+              
             >
               START
             </button>

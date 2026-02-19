@@ -58,7 +58,7 @@ export default function ContactPage({ onBack }) {
           {/* EMAIL BOX — NOT CLICKABLE */}
 
           <div className="contact-email">
-            staark.jr3000@email.com
+            staark.jr3000@gmail.com
           </div>
 
 

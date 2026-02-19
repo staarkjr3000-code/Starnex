@@ -11,8 +11,7 @@ import ExplorePage from "./components/ExplorePage";
 import HeroPage from "./components/HeroPage";
 import SocialMediaPage from "./components/SocialMediaPage";
 import ContactPage from "./components/ContactPage";
-
-import "./index.css";
+import { playClick } from "./utils/sound";
 
 export default function App() {
 
@@ -53,6 +52,7 @@ export default function App() {
     return (
       <LoadingScene
         onStart={() => {
+          
 
           setStarted(true);
           document.body.classList.add("main-app");
@@ -100,7 +100,10 @@ export default function App() {
           {/* EXPLORE BUTTON */}
           <button
             className="explore-button"
-            onClick={() => setExploreOpen(true)}
+            onClick={() => {
+              playClick();
+              setExploreOpen(true);
+            }}
           >
             EXPLORE
           </button>
@@ -114,16 +117,23 @@ export default function App() {
       {exploreOpen && !heroOpen && !socialOpen&& (
         
       <ExplorePage
-       onBack={() => setExploreOpen(false)}
+       onBack={() => {
+        playClick();
+        setExploreOpen(false);
+       }}
+       
        onHero={() => {
+        playClick();
        setExploreOpen(false);
        setHeroOpen(true);
      }}
      onSocial={() => {
+      playClick();
       setExploreOpen(false);
       setSocialOpen(true);
      }}
      onContact={() => {
+      playClick();
       setExploreOpen(false);
       setContactOpen(true);
      }}
@@ -135,6 +145,7 @@ export default function App() {
         <HeroPage
 
           onBack={() => {
+            playClick();
             setHeroOpen(false);
             setExploreOpen(true);
           }}
@@ -146,6 +157,7 @@ export default function App() {
       {socialOpen && (
         <SocialMediaPage
           onBack={() => {
+            playClick();
            setSocialOpen(false);
            setExploreOpen(true);
         }}  
@@ -155,6 +167,7 @@ export default function App() {
       {contactOpen && (
         <ContactPage
           onBack={() => {
+            playClick();
             setContactOpen(false);
             setExploreOpen(true);
           }}

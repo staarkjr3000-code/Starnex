@@ -564,3 +564,27 @@ canvas {
 .bg-video {
   object-fit: cover;
 }
+
+:root {
+
+  --tiltX: 0px;
+  --tiltY: 0px;
+
+}
+
+
+/* Apply to background */
+
+.bg-video,
+#tsparticles,
+.hero-container {
+
+  transform:
+    translate(
+      var(--tiltX),
+      var(--tiltY)
+    );
+
+  transition: transform 0.1s linear;
+
+}
