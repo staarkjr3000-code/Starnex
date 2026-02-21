@@ -28,23 +28,6 @@ export default function App() {
   
 
 
-  /* ================= MAIN FADE IN ================= */
-
-  useEffect(() => {
-
-    if (started) {
-
-      const timer = setTimeout(() => {
-        setMainVisible(true);
-      }, 100);
-
-      return () => clearTimeout(timer);
-
-    }
-
-  }, [started]);
-
-
   /* ================= LOADING SCREEN ================= */
 
   if (!started) {
@@ -74,17 +57,12 @@ export default function App() {
       {/* VIDEO BACKGROUND */}
       <VideoBackground />
       
-      <img
-        src={logo}
-        alt="STAARK Logo"
-        className="main-logo"
-      />
-
+    
 
       {/* MAIN SCREEN */}
-      {!exploreOpen && !heroOpen && (
+      {!exploreOpen && !heroOpen && !socialOpen && !contactOpen && (
 
-        <div className={`main-container ${mainVisible ? "main-visible" : ""}`}>
+      <div className="main-screen">
 
 
           {/* GLOW RING */}

@@ -7,6 +7,7 @@ export default function VideoBackground() {
       muted
       loop
       playsInline
+      preload="auto"
       className="video-bg"
     >
       <source src={bgVideo} type="video/mp4" />

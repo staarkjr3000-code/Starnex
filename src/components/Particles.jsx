@@ -1,28 +1,22 @@
 import { useEffect, useRef } from "react";
 
 export default function Particles() {
-  const canvasRef = useRef(null);
-  const audioCtxRef = useRef(null);
-  const analyserRef = useRef(null);
-  const dataRef = useRef(null);
 
-  const mouse = { x: 0, y: 0 };
-  let t = 0;
+  const canvasRef = useRef(null);
 
   useEffect(() => {
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    let w = (canvas.width = window.innerWidth);
-    let h = (canvas.height = window.innerHeight);
-    let cx = w / 2;
-    let cy = h / 2;
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
+
+    let mouse = { x: w/2, y: h/2 };
 
     window.addEventListener("resize", () => {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
-      cx = w / 2;
-      cy = h / 2;
     });
 
     window.addEventListener("mousemove", (e) => {
@@ -31,147 +25,211 @@ export default function Particles() {
     });
 
     /* ======================
-       🎵 SAFE AUDIO INIT
+       WIND FIELD
     ======================= */
-    function initAudio() {
-      if (audioCtxRef.current) return;
-      const audio = document.querySelector("audio");
-      if (!audio) return;
 
-      const audioCtx = new (window.AudioContext ||
-        window.webkitAudioContext)();
-      const analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 128;
-
-      const source = audioCtx.createMediaElementSource(audio);
-      source.connect(analyser);
-      analyser.connect(audioCtx.destination);
-
-      audioCtxRef.current = audioCtx;
-      analyserRef.current = analyser;
-      dataRef.current = new Uint8Array(analyser.frequencyBinCount);
-    }
-
-    window.addEventListener("click", initAudio, { once: true });
-
-    /* ======================
-       ✨ PARTICLES (FROM RING EDGE)
-    ======================= */
-    const particles = [];
-    const COUNT = 360;
-
-    function spawnParticle(ringRadius) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 3 + 1;
+    function wind(x, y, t) {
 
       return {
-        x: cx + Math.cos(angle) * ringRadius,
-        y: cy + Math.sin(angle) * ringRadius,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        life: Math.random() * 220 + 180,
-        size: Math.random() * 1.8 + 0.6,
+
+        x: Math.sin(y * 0.002 + t * 0.3) * 0.15,
+
+        y: -0.2 + Math.cos(x * 0.002 + t * 0.2) * 0.1
+
       };
+
+    }
+
+    /* ======================
+       DUST PARTICLES
+    ======================= */
+
+    const dust = [];
+    const COUNT = 240;
+
+    function createDust() {
+
+      const depth = Math.random();
+
+      return {
+
+        x: Math.random() * w,
+        y: Math.random() * h,
+
+        vx: 0,
+        vy: 0,
+
+        depth,
+
+        size: 0.4 + depth * 1.8,
+
+        opacity: 0.05 + depth * 0.25,
+
+        drift: Math.random() * Math.PI * 2
+
+      };
+
     }
 
     for (let i = 0; i < COUNT; i++) {
-      particles.push(spawnParticle(120));
+      dust.push(createDust());
     }
 
     /* ======================
-       🎬 ANIMATION LOOP
+       STREAKS
     ======================= */
+
+    const streaks = [];
+
+    function createStreak() {
+
+      const left = Math.random() < 0.5;
+
+      return {
+
+        x: left ? -200 : w + 200,
+        y: Math.random() * h,
+
+        vx: left ? 1.2 : -1.2,
+
+        length: 100,
+
+        opacity: 0.2,
+
+        life: 0,
+        maxLife: 400
+
+      };
+
+    }
+
+    let t = 0;
+
+    /* ======================
+       ANIMATION
+    ======================= */
+
     function animate() {
+
       ctx.clearRect(0, 0, w, h);
+
       t += 0.01;
 
-      /* 🎵 MUSIC ENERGY */
-      let bass = 0;
-      if (analyserRef.current && dataRef.current) {
-        analyserRef.current.getByteFrequencyData(dataRef.current);
-        bass = dataRef.current[1] / 255;
-      }
+      /* dust */
 
-      bass = Math.pow(bass, 0.7);
+      dust.forEach(p => {
 
-      /* ======================
-         🔘 GLOWING RING
-      ======================= */
-      const baseRadius = 100;
-      const ringRadius = baseRadius + bass * 160;
-      const thickness = 10 + bass * 22;
-      const wave = Math.sin(t * 2) * 6;
+        const wf = wind(p.x, p.y, t);
 
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(t * 0.25);
+        p.vx += wf.x * 0.02;
+        p.vy += wf.y * 0.02;
 
-      ctx.beginPath();
-      ctx.arc(0, 0, ringRadius + wave, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(255,255,255,${0.6 + bass})`;
-      ctx.lineWidth = thickness;
-      ctx.shadowBlur = 30 + bass * 50;
-      ctx.shadowColor = "rgba(160,220,255,1)";
-      ctx.stroke();
+        p.vx *= 0.98;
+        p.vy *= 0.98;
 
-      ctx.restore();
+        p.x += p.vx;
+        p.y += p.vy;
 
-      /* ======================
-         ✨ PARTICLES
-      ======================= */
-      particles.forEach((p, i) => {
-        p.x += p.vx * (1 + bass * 2.5);
-        p.y += p.vy * (1 + bass * 2.5);
-        p.life--;
+        /* mouse repel */
 
-        /* 🌀 Mouse distortion */
         const dx = p.x - mouse.x;
         const dy = p.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
-        if (dist < 150) {
-          const force = (150 - dist) * 0.03;
-          p.x += (dx / dist) * force;
-          p.y += (dy / dist) * force;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+
+        if (dist < 140) {
+
+          p.vx += dx * 0.0005;
+          p.vy += dy * 0.0005;
+
         }
 
-        /* Respawn at ring edge */
-        if (
-          p.life <= 0 ||
-          p.x < -150 ||
-          p.x > w + 150 ||
-          p.y < -150 ||
-          p.y > h + 150
-        ) {
-          particles[i] = spawnParticle(ringRadius);
-          return;
+        /* reset */
+
+        if (p.y < -20) {
+          p.y = h + 20;
+          p.x = Math.random() * w;
         }
+
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+
+        /* parallax */
+
+        const rx = p.x + (mouse.x - w/2) * p.depth * 0.015;
+        const ry = p.y + (mouse.y - h/2) * p.depth * 0.015;
+
+        /* draw */
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size + bass * 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${0.5 + bass})`;
-        ctx.shadowBlur = 10 + bass * 25;
-        ctx.shadowColor = "rgba(160,220,255,0.9)";
+
+        ctx.arc(rx, ry, p.size, 0, Math.PI * 2);
+
+        ctx.fillStyle = `rgba(255,255,255,${p.opacity})`;
+
+        ctx.shadowBlur = p.depth * 12;
+
+        ctx.shadowColor = "rgba(255,255,255,0.25)";
+
         ctx.fill();
-        ctx.shadowBlur = 0;
+
+      });
+
+      /* create streak */
+
+      if (Math.random() < 0.002 && streaks.length < 2) {
+
+        streaks.push(createStreak());
+
+      }
+
+      /* draw streak */
+
+      streaks.forEach((s, i) => {
+
+        s.x += s.vx;
+        s.life++;
+
+        const g = ctx.createLinearGradient(
+          s.x,
+          s.y,
+          s.x - s.length * Math.sign(s.vx),
+          s.y
+        );
+
+        g.addColorStop(0, `rgba(255,255,255,${s.opacity})`);
+        g.addColorStop(1, "rgba(255,255,255,0)");
+
+        ctx.strokeStyle = g;
+
+        ctx.lineWidth = 1;
+
+        ctx.beginPath();
+
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.length * Math.sign(s.vx), s.y);
+
+        ctx.stroke();
+
+        if (s.life > s.maxLife) {
+          streaks.splice(i, 1);
+        }
+
       });
 
       requestAnimationFrame(animate);
+
     }
 
     animate();
+
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 1,
-        pointerEvents: "none",
-        background: "transparent", // IMPORTANT: no video color change
-      }}
+      className="particles-canvas"
     />
   );
+
 }
